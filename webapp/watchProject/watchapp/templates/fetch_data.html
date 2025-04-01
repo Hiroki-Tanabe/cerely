@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MySQLデータ取得</title>
+    <script>
+        async function fetchData() {
+            const response = await fetch('/fetch-table-data/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+            alert('データ取得成功！');
+        }
+    </script>
+</head>
+<body>
+    <button onclick="fetchData()">データを取得</button>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>データを入力</title>
+</head>
+<body>
+    <h1>テーブルにデータを追加</h1>
+    <form method="POST" action="/add-data/">
+        {% csrf_token %}
+        <label for="name">名前を入力：</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">送信</button>
+    </form>
+</body>
+</html>

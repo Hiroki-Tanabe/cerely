@@ -23,4 +23,6 @@ urlpatterns = [
     path('', views.say_hello, name='say_hello'),
     # path('run-task/', run_task, name='run_task'),
     path('add-and-display/', views.add_and_display, name='add_and_display'),
+    path('fetch-table-data/', views.fetch_table_data, name='fetch_table_data'),
+    path('add-data/', views.add_data, name='add_data'),
 ]

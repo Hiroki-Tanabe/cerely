@@ -1,5 +1,6 @@
 from celery import Celery
 import datetime
+import requests
 
 # Celeryインスタンスを作成
 app = Celery('tasks')
@@ -11,14 +12,19 @@ def sample_task():
     print(f"タスク実行: {datetime.datetime.now()}")
     return "Task Completed"
 
+    # """
+    # Celeryタスク: データを指定されたエンドポイントに送信
+    # """
+    # url = 'http://localhost/add-and-display/'  # エンドポイントURL
+    # headers = {
+    #     'Content-Type': 'application/json',
+    #     'X-CSRFToken': 'your_csrf_token_here'  # 必要に応じてCSRFトークンを設定
+    # }
+    # data = "hello"
 
-# from django.conf import settings
-# import django
-# django.setup()
-
-# from watchapp.models import MyModel  # Djangoモデル
-
-# @app.task
-# def update_database_task(data):
-#     obj = MyModel.objects.create(field_name=data)
-#     return f"Database updated with: {obj}"
+    # try:
+    #     response = requests.post(url, json={'new_data': data}, headers=headers)
+    #     response.raise_for_status()  # HTTPエラーをチェック
+    #     return f"データ送信成功: {response.json()}"
+    # except requests.exceptions.RequestException as e:
+    #     return f"エラー発生: {str(e)}"

@@ -13,8 +13,12 @@ ENV PYTHONPATH=/app/watchProject
 
 COPY . .
 
+RUN chmod +x ./entrypoint.sh
+
 # エントリポイントを設定
+COPY ./entrypoint.sh /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
 # ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["python", "watchProject/manage.py", "makemigrate"]
-CMD ["python", "watchProject/manage.py", "migrate"]
-CMD ["python", "watchProject/manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "watchProject/manage.py", "makemigrate"]
+# CMD ["python", "watchProject/manage.py", "migrate"]
+# CMD ["python", "watchProject/manage.py", "runserver", "0.0.0.0:8000"]
