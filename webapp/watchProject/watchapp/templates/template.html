@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データ追加と更新</title>
+    <script>
+        async function sendData() {
+            const inputData = document.getElementById('input-data').value;
+            const response = await fetch('/add-and-display/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}', // CSRF対策
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ new_data: inputData })
+            });
+            const result = await response.json();
+            // データを画面に更新
+            const display = document.getElementById('data-display');
+            display.innerHTML = result.data.map(item => `<p>${item.field_name}</p>`).join('');
+        }
+    </script>
+</head>
+<body>
+    <h1>データベースに追加</h1>
+    <input id="input-data" type="text" placeholder="新しいデータを入力">
+    <button onclick="sendData()">送信</button>
+    <div id="data-display"></div>
+</body>
+</html>
