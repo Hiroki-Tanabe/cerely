@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>データ表示ページ</title>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/fetch-table-data/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // 必要なヘッダーを設定
+                        'X-CSRFToken': '{{ csrf_token }}' // CSRFトークンを付与
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTPエラー: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.data) {
+                    const table = document.getElementById('data-table');
+                    table.innerHTML = ''; // 既存データをリセット
+                    result.data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        Object.values(row).forEach(cellData => {
+                            const td = document.createElement('td');
+                            td.textContent = cellData; // データをセルに設定
+                            tr.appendChild(td);
+                        });
+                        table.appendChild(tr);
+                    });
+                } else {
+                    alert('データ取得に失敗しました: ' + (result.error || '不明なエラー'));
+                }
+            } catch (error) {
+                console.error('エラーが発生しました:', error);
+                alert('データ取得中に問題が発生しました。詳細はコンソールを確認してください。');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>データ表示ページ</h1>
+    <form onsubmit="event.preventDefault(); fetchData();">
+        <button type="submit">データを取得</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <!-- テーブルのカラム名を適宜調整 -->
+                <th>列1</th>
+                <th>列2</th>
+                <th>列3</th>
+            </tr>
+        </thead>
+        <tbody id="data-table">
+            <!-- データが動的に挿入されます -->
+        </tbody>
+    </table>
+</body>
+</html>

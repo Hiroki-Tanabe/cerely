@@ -21,8 +21,8 @@ from watchapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.say_hello, name='say_hello'),
-    # path('run-task/', run_task, name='run_task'),
-    path('add-and-display/', views.add_and_display, name='add_and_display'),
-    path('fetch-table-data/', views.fetch_table_data, name='fetch_table_data'),
-    path('add-data/', views.add_data, name='add_data'),
+    path('api/fetch-table-data/', views.api_fetch_table_data, name='api_fetch_table_data'),
+    path('fetch-table-data/', views.display_fetch_table_data, name='display_fetch_table_data'),
+    path('api/add-table-data/', views.api_add_table_data, name='api_add_table_data'),
+    path('add-table-data/', views.display_add_table_data, name='display_add_table_data'),
 ]

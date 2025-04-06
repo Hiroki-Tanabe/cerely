@@ -1,6 +1,7 @@
 from celery import Celery
 import datetime
 import requests
+from ..webapp.models import MyModel
 
 # Celeryインスタンスを作成
 app = Celery('tasks')

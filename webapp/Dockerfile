@@ -2,6 +2,8 @@ FROM python:3.12
 
 WORKDIR /app
 
+ENV PYTHONUNBUFFERED 1   # この環境変数に値を入れることでバッファを無効化する('1'じゃなくてもいい)
+
 RUN apt-get update && apt-get install -y
 RUN apt-get install iputils-ping -y
 RUN apt-get install netcat-openbsd -y

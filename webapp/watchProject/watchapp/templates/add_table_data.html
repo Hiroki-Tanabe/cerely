@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>データ追加ページ</title>
+</head>
+<body>
+    <h1>データを追加</h1>
+    <form onsubmit="event.preventDefault(); addData();">
+        <label for="column1">Column1:</label>
+        <input type="text" id="column1" name="column1" required>
+        <br><br>
+        <label for="column2">Column2:</label>
+        <input type="number" id="column2" name="column2" required>
+        <br><br>
+        <label for="column3">Column3 (日時):</label>
+        <input type="datetime-local" id="column3" name="column3" required>
+        <br><br>
+        <button type="submit">データを追加</button>
+    </form>
+    <script>
+        async function addData() {
+            const data = {
+                column1: document.getElementById('column1').value,
+                column2: parseInt(document.getElementById('column2').value, 10), // 数値に変換
+                column3: new Date(document.getElementById('column3').value).toISOString()
+            };
+            try {
+                const response = await fetch('/api/add-table-data/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // JSON形式で送信
+                        'X-CSRFToken': '{{ csrf_token }}' // CSRFトークンを付与
+                    },
+                    body: JSON.stringify(data) // JSON文字列に変換して送信
+                });
+                const result = await response.json(); // レスポンスのJSONデータを解析
+                if (response.ok) {
+                    console.log('データ追加成功: ', result); // 成功時にコンソールに記録
+                } else {
+                    alert('データ追加失敗: ' + (result.error || '不明なエラー'));
+                }
+            } catch (error) {
+                console.error('エラーが発生しました:', error);
+                alert('データ送信中に問題が発生しました。');
+            }
+        }
+    </script>
+</body>
+</html>
